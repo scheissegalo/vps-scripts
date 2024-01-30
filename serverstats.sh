@@ -3,20 +3,8 @@
 # Update scripts
 . ./update.sh
 
-# Services to check (modify as needed)
-#services=(apache2 mysql redis ts3bot ts3server matrix-synapse)
-
 # Default services to check (if no parameters are provided)
 default_services=(apache2 mysql ts3bot ts3server matrix-synapse)
-
-# Read services from command-line parameters or use defaults
-#services="${@:-${default_services[@]}}"
-
-# if pgrep -f "$program_name" >/dev/null; then
-#   echo "$program_name is running."
-# else
-#   echo "$program_name is not running."
-# fi
 
 # Read services from command-line parameters or use defaults
 services=("${@:-${default_services[@]}}")  # Enclose in parentheses for array expansion
@@ -30,15 +18,6 @@ cpu_load=$(top -b 1 -n 1 | grep "Cpu0" | awk '{print $3}')
 
 # Check status of each service and format output
 output=""
-
-# for service in "${services[@]}"; do
-#   status=$(systemctl is-active "$service")
-#   if [[ $status == "active" ]]; then
-#     output="$output$service:running\n"
-#   else
-#     output="$output$service:stopped\n"
-#   fi
-# done
 
 for service in "${services[@]}"; do
   if systemctl is-active "$service"; then
