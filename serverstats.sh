@@ -10,7 +10,10 @@
 default_services=(apache2 mysql redis ts3bot ts3server matrix-synapse)
 
 # Read services from command-line parameters or use defaults
-services="${@:-${default_services[@]}}"
+#services="${@:-${default_services[@]}}"
+
+# Read services from command-line parameters or use defaults
+services=("${@:-${default_services[@]}}")  # Enclose in parentheses for array expansion
 
 # Get memory usage and free memory
 mem_total=$(free -m | awk '/Mem:/{print $2}')
@@ -21,6 +24,7 @@ cpu_load=$(top -b 1 -n 1 | grep "Cpu0" | awk '{print $3}')
 
 # Check status of each service and format output
 output=""
+
 for service in "${services[@]}"; do
   status=$(systemctl is-active "$service")
   if [[ $status == "active" ]]; then
