@@ -4,7 +4,13 @@
 . ./update.sh
 
 # Services to check (modify as needed)
-services=(apache2 mysql redis ts3bot ts3server matrix-synapse)
+#services=(apache2 mysql redis ts3bot ts3server matrix-synapse)
+
+# Default services to check (if no parameters are provided)
+default_services=(apache2 mysql redis ts3bot ts3server matrix-synapse)
+
+# Read services from command-line parameters or use defaults
+services="${@:-${default_services[@]}}"
 
 # Get memory usage and free memory
 mem_total=$(free -m | awk '/Mem:/{print $2}')
