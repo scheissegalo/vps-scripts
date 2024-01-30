@@ -21,3 +21,5 @@ if [[ $latest_remote_hash != $current_commit_hash ]]; then
 else
   echo "No updates available."
 fi
+
+find . -name "*.sh" -exec chmod +x {} \;
