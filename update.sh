@@ -22,4 +22,4 @@ else
   echo "No updates available."
 fi
 
-find . -name "*.sh" -exec chmod +x {} \;
+bash ./set_permissions.sh  # Fix Permisssions
