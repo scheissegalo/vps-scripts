@@ -22,4 +22,4 @@ else
   echo "No updates available."
 fi
 
-sh find . -name "*.sh" -exec chmod +x {} \;
+bash find . -name "*.sh" -exec chmod +x {} \;
