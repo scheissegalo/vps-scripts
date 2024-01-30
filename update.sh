@@ -22,4 +22,4 @@ else
   echo "No updates available."
 fi
 
-bash ./set_permissions.sh  # Fix Permisssions
+bash ./setpermission.sh  # Fix Permisssions
