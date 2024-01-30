@@ -12,6 +12,12 @@ default_services=(apache2 mysql ts3bot ts3server matrix-synapse)
 # Read services from command-line parameters or use defaults
 #services="${@:-${default_services[@]}}"
 
+# if pgrep -f "$program_name" >/dev/null; then
+#   echo "$program_name is running."
+# else
+#   echo "$program_name is not running."
+# fi
+
 # Read services from command-line parameters or use defaults
 services=("${@:-${default_services[@]}}")  # Enclose in parentheses for array expansion
 
@@ -25,12 +31,24 @@ cpu_load=$(top -b 1 -n 1 | grep "Cpu0" | awk '{print $3}')
 # Check status of each service and format output
 output=""
 
+# for service in "${services[@]}"; do
+#   status=$(systemctl is-active "$service")
+#   if [[ $status == "active" ]]; then
+#     output="$output$service:running\n"
+#   else
+#     output="$output$service:stopped\n"
+#   fi
+# done
+
 for service in "${services[@]}"; do
-  status=$(systemctl is-active "$service")
-  if [[ $status == "active" ]]; then
-    output="$output$service:running\n"
+  if systemctl is-active "$service"; then
+    output="$output$service:running\n"  # Handle active services
   else
-    output="$output$service:stopped\n"
+    if pgrep -f "$service" >/dev/null; then  # Check for running program
+      output="$output$service:running\n"  # Handle running programs
+    else
+      output="$output$service:stopped\n"  # Handle stopped services
+    fi
   fi
 done
 
