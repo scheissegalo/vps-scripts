@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Update scripts
-update.sh
+. update.sh
 
 # Services to check (modify as needed)
 services=(apache2 mysql redis ts3bot ts3server matrix-synapse)
